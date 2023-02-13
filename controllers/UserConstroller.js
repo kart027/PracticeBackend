@@ -311,6 +311,9 @@ exports.deleteUser = CatchAsyncError(async(req,res,next)=>{
 })
 
 
+User.watch().on("change",async()=>{})
+
+
 
 
 

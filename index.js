@@ -4,7 +4,9 @@ const bodyParser = require("body-parser")
 const cookie = require("cookie-parser")
 const cloudinary = require("cloudinary")
 const { connectDb } = require("./config/database")
+const nodecron = require("node-cron")
 const razorpay = require("razorpay")
+const Stats = require("../models/Stats")
 require("dotenv").config({
     path:"./config/config.env"
 });
@@ -24,6 +26,14 @@ cloudinary.v2.config({
 exports.instance = new razorpay({
     key_id:process.env.key_id,
     key_secret:process.env.key_secret
+})
+
+nodecron.schedule("0 0 0 1 * *", async()=>{
+    try {
+        await Stats.create({})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 const userroute = require("./routes/Userroutes");
