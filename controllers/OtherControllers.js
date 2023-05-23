@@ -9,4 +9,5 @@ exports.contact = CatchAsyncError(async(req,res,next)=>{
 
 exports.getDashboardStats = CatchAsyncError(async(req,res,next)=>{
     const stats = await Stats.find({}).sort({created_at:"desc"}).limit(12)
+     
 })
