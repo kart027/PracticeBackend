@@ -6,7 +6,8 @@ const cloudinary = require("cloudinary")
 const { connectDb } = require("./config/database")
 const nodecron = require("node-cron")
 const razorpay = require("razorpay")
-const Stats = require("../models/Stats")
+const Stats = require("./models/Stats")
+const cors = require("cors")
 require("dotenv").config({
     path:"./config/config.env"
 });
@@ -14,6 +15,11 @@ const ErrorMiddleware = require("./middlewares/Error")
 app.use(express.json());
 app.use(cookie())
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(cors({
+    origin:"http://localhost:3000",
+    credentials:true,
+    methods:["GET","PUT","POST","DELETE"]
+}))
 
 connectDb();
 
