@@ -6,6 +6,7 @@ const { sendEmail } = require("../utils/SendEmail");
 const Course = require("../models/CourseSchema")
 const cloudinary = require("cloudinary")
 const getDatauri = require("../utils/DataUri")
+const stat = require("../models/Stats")
 
 const crypto = require("crypto")
 
@@ -311,7 +312,17 @@ exports.deleteUser = CatchAsyncError(async(req,res,next)=>{
 })
 
 
-User.watch().on("change",async()=>{})
+User.watch().on("change",async()=>{
+    const stats = await stat.find({}).sort({createdAt:"desc"}).limit(1);
+
+    const subscription = await User.find({"subscription.status":"active"})
+    stats[0].users = await User.countDocuments();
+    stats[0].subscription = subscription.length;
+    stats[0].createdAt = new Date(Date.now())
+
+    await stats.save();
+    
+})
 
 
 

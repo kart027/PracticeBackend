@@ -3,7 +3,9 @@ const User = require("../models/Usermodels")
 const { CatchAsyncError } =require("../middlewares/CatchAsyncError");
 const  ErrorHandler  = require("../utils/Errorhandler");
 const getDatauri = require("../utils/DataUri")
-const cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary");
+const { on } = require("nodemailer/lib/xoauth2");
+const Stat = require("../models/Stats")
 
 
 
@@ -222,6 +224,23 @@ exports.DeleteLecture = CatchAsyncError(async(req,res,next)=>{
         sucess:true,
         message:"Lecture deleted sucefully",
     })
+})
+
+Courses.watch().on("change",async()=>{
+    const stats = await stat.find({}).sort({ createdAt: "desc" }).limit(1);
+
+    const courses = await Courses.find({});
+     let totalview = 0;
+
+     for(let i =0;i<courses.length;i++){
+        totalview += courses[i].views
+     }
+
+     stats[0].views = totalview;
+     stats[0].createdAt = new Date(Date.now());
+
+     await stats[0].save();
+
 })
 
 
