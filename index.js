@@ -39,10 +39,12 @@ nodecron.schedule("0 0 0 1 * *", async()=>{
 const userroute = require("./routes/Userroutes");
 const courseroute = require("./routes/Courseroutes");
 const paymentroutes = require("./routes/paymentroutes")
+const otherroutes = require("./routes/Otherroutes")
 
 app.use("/user",userroute);
 app.use("/course",courseroute)
 app.use("/payment",paymentroutes)
+app.use("/other",otherroutes)
 app.use(ErrorMiddleware);
 
 

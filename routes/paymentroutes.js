@@ -9,7 +9,7 @@ router.route("/subscribe").get(isAuthenticated,Buysubscritption)
 router.route("/paymentverification").post(isAuthenticated,paymentVerification)
 router.route("/razorpayKey").get(getRazorpayKey)
 
-router.route("/subscribe").delete(isAuthenticated,CancelSubcsription)
+router.route("/Cancelsubscribe").delete(isAuthenticated,CancelSubcsription)
 
 // Cancel subscription
 
