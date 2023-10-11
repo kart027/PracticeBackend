@@ -61,5 +61,5 @@ app.use(ErrorMiddleware);
 
 
 app.listen(process.env.PORT,()=>{
-    console.log("workin")
+    console.log("working")
 })
