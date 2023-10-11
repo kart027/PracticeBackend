@@ -24,9 +24,10 @@ exports.getALLcourses = async (req,res)=>{
 }
 
 exports.createCourse = CatchAsyncError(async(req,res ,next)=>{
-    const {tittle,description,category,createdBy} = req.body;
+    const { title,description,category,createdBy} = req.body;
+    console.log(title,description,category,createdBy)
 
-    if(!tittle || !description || !category || !createdBy){
+    if (!title || !description || !category || !createdBy){
         return next(new ErrorHandler("Please add all fields",400));
     }
 
@@ -37,7 +38,7 @@ exports.createCourse = CatchAsyncError(async(req,res ,next)=>{
 
         const mycloud = await cloudinary.v2.uploader.upload(fileuri.content)
     await Courses.create({
-        tittle,
+        title,
         description,
         category,
         createdBy,
@@ -140,7 +141,7 @@ exports.getcourselecture = CatchAsyncError(async (req,res,next)=>{
 // Maximum size can be only 100 mb
 exports.addcourselecture = CatchAsyncError(async (req,res,next)=>{
     
-    const {tittle, description} = req.body;
+    const {title, description} = req.body;
 
     
     const courses = await Courses.findById(req.params.id);
@@ -157,7 +158,7 @@ exports.addcourselecture = CatchAsyncError(async (req,res,next)=>{
         });
 
         courses.lectures.push({
-            title:tittle,
+            title:title,
             description:description,
             public_id:mycloud.public_id,
             url:mycloud.secure_url,

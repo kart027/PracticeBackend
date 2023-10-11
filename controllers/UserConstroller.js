@@ -115,8 +115,8 @@ exports.deleteMyprofile = CatchAsyncError(async(req,res,next)=>{
 })
 exports.changepassword = CatchAsyncError(async(req,res,next)=>{
 
-    const { oldPassword,newwPassword} = req.body;
-    if( !oldPassword || !newwPassword){
+    const { oldPassword,newPassword} = req.body;
+    if( !oldPassword || !newPassword){
         return next(new ErrorHandler("Please addd all field",400))
     }
 
@@ -128,7 +128,7 @@ exports.changepassword = CatchAsyncError(async(req,res,next)=>{
     if(!isMatch){
         return next(new ErrorHandler("Imcorrect old Password",400))
     }
-        user.password = newwPassword;
+        user.password = newPassword;
         await user.save();
     
         res.status(200).json({
@@ -321,7 +321,7 @@ User.watch().on("change",async()=>{
     stats[0].createdAt = new Date(Date.now())
 
     await stats.save();
-    
+
 })
 
 

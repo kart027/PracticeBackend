@@ -11,8 +11,14 @@ const cors = require("cors")
 require("dotenv").config({
     path:"./config/config.env"
 });
+const morgan = require('morgan');
 const ErrorMiddleware = require("./middlewares/Error")
 app.use(express.json());
+morgan.token('host', function (req, res) {
+    return req.hostname;
+});
+
+app.use(morgan(':method :host :status :res[content-length] - :response-time ms'))
 app.use(cookie())
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors({

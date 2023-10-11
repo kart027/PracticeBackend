@@ -29,25 +29,26 @@ exports.Buysubscritption = CatchAsyncError(async(req,res,next)=>{
 
         res.status(200).json({
             sucess:true,
-            Subscription: subscription.id
+            subscription
         })
 
 })
 
 exports.paymentVerification = CatchAsyncError(async(req,res,next)=>{
     const {razorpay_signature, razorpay_payment_id,razorpay_subscription_id} = req.body;
+    console.log(req.body)
 
     const user = await User.findById(req.user._id);
 
     const subscription_id = user.subscription_id;
 
-    const generated_signature = crypto.createHmac("sha256",process.env.Plan_Id).update(razorpay_payment_id+"|"+ subscription_id,"utf-8").digest("hex");
+    const generated_signature = crypto.createHmac("sha256", process.env.Key_secret).update(razorpay_payment_id+"|"+ subscription_id,"utf-8").digest("hex");
 
 
     const isAuthentic =  generated_signature===razorpay_signature;
 
     if(!isAuthentic){
-      return  res.redirect(`${process.env.frontenUrl}/paymentFailed`)
+        return res.redirect(`${process.env.frontenUrl}/paymentfail`)
     }
 
     await Payment.create({
@@ -60,7 +61,7 @@ exports.paymentVerification = CatchAsyncError(async(req,res,next)=>{
 
      await user.save();
 
-     res.redirect(`${process.env.frontenUrl}/paymentSucess?refrence=${razorpay_payment_id}`)
+     res.redirect(`${process.env.frontenUrl}/paymentsuccess?refrence=${razorpay_payment_id}`)
      })
 
 

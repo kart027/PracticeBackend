@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CourseSchema = new mongoose.Schema({
 
-    tittle:{
+    title:{
         type:String,
         required:[true,"Please enter tittle"],
         minlength:[4,"Minimum length should be 4"],
@@ -11,7 +11,7 @@ const CourseSchema = new mongoose.Schema({
     description:{
         type:String,
         required:[true,"Please enter course description"],
-        minlength:[10,"Minimum length should be 4"],
+        minlength:[4,"Minimum length should be 4"],
         
     },
    lectures :[
