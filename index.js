@@ -22,7 +22,7 @@ app.use(morgan(':method :host :status :res[content-length] - :response-time ms')
 app.use(cookie())
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors({
-    origin:"*",
+    origin:"https://frontend-ochre-tau.vercel.app",
     credentials:true,
     methods:["GET","PUT","POST","DELETE"]
 }))
