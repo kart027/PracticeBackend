@@ -49,7 +49,7 @@ nodecron.schedule("0 0 0 1 * *", async()=>{
 })
 
 const userroute = require("./routes/Userroutes");
-const courseroute = require("./routes/Courseroutes");
+const courseroute = require("./routes/CourseRoutes");
 const paymentroutes = require("./routes/paymentroutes")
 const otherroutes = require("./routes/Otherroutes")
 
